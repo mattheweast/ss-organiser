@@ -4,7 +4,7 @@ from datetime import datetime
 from config import project_name
 
 
-def organize_screenshots():
+def organise_screenshots():
     desktop_folder = os.path.join(os.path.expanduser('~'), 'Desktop')
     screenshot_folder = os.path.join(os.path.expanduser('~'), 'Documents', 'apple_apprenticeship', 'screenshots')
 
@@ -42,4 +42,4 @@ def organize_screenshots():
 
 
 if __name__ == "__main__":
-    organize_screenshots()
+    organise_screenshots()
