@@ -2,6 +2,7 @@ import os
 import shutil
 from datetime import datetime
 from config import project_name
+import subprocess
 
 
 def organise_screenshots():
@@ -13,6 +14,7 @@ def organise_screenshots():
         print(f'Created screenshot folder: {screenshot_folder}')
 
     screenshot_extensions = ('.png', '.jpg', '.jpeg', '.bmp', '.gif', '.tiff')
+    count = 0
 
     for filename in os.listdir(desktop_folder):
         if filename.lower().endswith(screenshot_extensions):
@@ -36,9 +38,25 @@ def organise_screenshots():
 
             dest_path = os.path.join(dest_folder, filename)
             shutil.move(src_path, dest_path)
+            count += 1
             print(f'Moved: {src_path} to {dest_path}')
 
+    temp_file = os.path.join(os.path.expanduser('~'), 'screenshot_count.txt')
+    with open(temp_file, 'w') as file:
+        file.write(str(count))
+
+    print(f'Saved count {count} to {temp_file}')
     print('Organizing screenshots completed.')
+
+    # Explicit path to the AppleScript
+    applescript_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'notify.applescript')
+    print(f'Running AppleScript at {applescript_path}')
+
+    result = subprocess.run(['osascript', applescript_path], capture_output=True, text=True)
+    if result.returncode != 0:
+        print(f'Error running AppleScript: {result.stderr}')
+    else:
+        print('AppleScript executed successfully')
 
 
 if __name__ == "__main__":
