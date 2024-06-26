@@ -1,12 +1,12 @@
 import os
 import shutil
 from datetime import datetime
-from config import project_name  # Import project name from config file
+from config import project_name
 
 
 def organize_screenshots():
     desktop_folder = os.path.join(os.path.expanduser('~'), 'Desktop')
-    screenshot_folder = os.path.join(os.path.expanduser('~'), 'Documents', 'Screenshots')
+    screenshot_folder = os.path.join(os.path.expanduser('~'), 'Documents', 'apple_apprenticeship', 'screenshots')
 
     if not os.path.exists(screenshot_folder):
         os.makedirs(screenshot_folder)
@@ -18,7 +18,6 @@ def organize_screenshots():
         if filename.lower().endswith(screenshot_extensions):
             src_path = os.path.join(desktop_folder, filename)
 
-            # Extract date from screenshot filename
             try:
                 date_str = filename.split('Screenshot ')[1].split(' at ')[0]
                 date_created = datetime.strptime(date_str, "%Y-%m-%d").strftime("%d-%m-%Y")
